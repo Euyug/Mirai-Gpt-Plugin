@@ -4,7 +4,8 @@
 
 /key~【你的key】进行配置apikey 可以在./config/Chatbot/preset/key.txt中查看你添加的key
 
-/预设【预设文件名字】可以设置预设，文件在./config/Chatbot/preset内，可以自己添加预设，名字为xx.json，格式要求和已有的预设相同，特别注意“”符号与换行\n
+/预设【预设文件名字】可以设置预设，文件在./config/Chatbot/preset内，可以自己添加预设，名字为xx.json，格式要求和已有的预设相同，特别注意“”符号与换行
+
 预设文件可以在githu里的/preset里下载，下载后上传到你部署的机器人的./config/Chatbot/preset文件夹内，任何地方输入“预设列表”可以查看你的所有预设
 
 目前有的预设：default，ikun
