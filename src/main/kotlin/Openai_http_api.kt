@@ -15,14 +15,14 @@ import java.net.SocketTimeoutException
 import java.util.concurrent.TimeUnit
 
 
-fun Openai_http_api(content : String, ID : Long, name : String= "") : String {
+fun openaiChatApi(content: String, ID: Long, name: String = ""): String {
     val path = if (name.isEmpty()) path_preset else "$path_preset/group"
 
     //配置文件夹
-    val folder_id = File("$path/$ID")
+    val folderId = File("$path/$ID")
 
     //每个qq的聊天记录
-    val message_file = File(folder_id,"message.json")
+    val messageFile = File(folderId,"message.json")
 
     //每个qq的设置文件
 //        {
@@ -31,33 +31,34 @@ fun Openai_http_api(content : String, ID : Long, name : String= "") : String {
 //            "private":false
 //        }
 
-    val set_json = JSONObject(File(folder_id,"set.json").readText())
-    val set_type = set_json.getString("type")//type为每个qq对应的预设文件名
+    val setJson = JSONObject(File(folderId,"set.json").readText())
+    var setType = setJson.getString("type")//type为每个qq对应的预设文件名
+    if (!File(path_preset,"$setType.json").exists()) setType = "default"
+    val chat = setJson.getBoolean("chat")
 
     //请求体中除了message以外的其他参数
     val parameters = JSONObject(File("./config/Chatbot/parameters.json").readText())
 
-    //最终请求体的messages的最前面的预设提示
-    val preset = JSONArray(File(folder_preset,"$set_type.json").readText())
+    //先读取最终请求体的messages的最前面的预设提示
+    val requestMessage = JSONArray(File(folder_preset,"$setType.json").readText())
 
-    //request_message变量为最终请求体里的message，这里先读入预设中的值,message为对话内容，最后写入到message.json文件里
+    //requestMessage变量为最终请求体里的message，这里先读入预设中的值,message为对话内容，最后写入到message.json文件里
     var message = JSONArray()
-    val request_message = preset
 
     //读入存在message.json中存的旧消息，并合并到变量message中
-    if(message_file.exists()) message = JSONArray(message_file.readText())
+    if (messageFile.exists() && chat) message = JSONArray(messageFile.readText())
     /* 叠加新消息 */
-    val new_message = JSONObject().put("role","user").put("content",content)
-    if(name.isNotEmpty())new_message.put("name",name)
-    message = message.put(new_message)
+    val newMessage = JSONObject().put("role","user").put("content",content)
+    if (name.isNotEmpty()) newMessage.put("name",name.substring(0, 6))
+    message = message.put(newMessage)
 
     //请求体里的message添加聊天内容
-    for(i in 0 until message.length()) request_message.put(message.getJSONObject(i))
+    for (i in 0 until message.length()) requestMessage.put(message.getJSONObject(i))
 
 //建立请求体—————————————————————————————————————————————————————————————————————————————————————————————————————————————
     //请求体json内更改新的message：JsonArray
-    val jsonMediaType = "application/json; charset=utf-8".toMediaType()
-    val requestBody = parameters.put("messages",request_message).toString().toRequestBody(jsonMediaType)
+    val jsonMediaType = "application/json;charset=utf-8".toMediaType()
+    val requestBody = parameters.put("messages",requestMessage).toString().toRequestBody(jsonMediaType)
     val client = OkHttpClient().newBuilder()
         .connectTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
@@ -78,7 +79,7 @@ fun Openai_http_api(content : String, ID : Long, name : String= "") : String {
 //    """.trimIndent().toRequestBody(jsonMediaType)
 
     val request = Request.Builder()
-        .url("https://openai.geekr.cool/v1/chat/completions")
+        .url("https://api.openai-proxy.com/v1/chat/completions")
         .addHeader("Authorization", "Bearer $apikey")
         .post(requestBody)
         .build()
@@ -89,17 +90,18 @@ fun Openai_http_api(content : String, ID : Long, name : String= "") : String {
         val response = client.newCall(request).execute()
         val responseBody = response.body?.string()
         try {
-            val s = rspsbdMessage(JSONObject(responseBody))
+            val s = responseBodyMessage(JSONObject(responseBody))
             //保存聊天记录,并根据长度修改防止过长
-            message = message.put(s)
-            while(message.toString().length > 2047) message = JSONArray(message.drop(2))
-            message_file.writeText(message.toString())
-
+            if (chat) {
+                message = message.put(s)
+                while (message.toString().length > 2000) message = JSONArray(message.drop(2))
+                messageFile.writeText(message.toString())
+            }
 
             s.getString("content")
-        } catch (e: JSONException){
-            val gpterror = rspsbdError(JSONObject(responseBody))
-            "失败 错误信息：${gpterror.getString("message")}"
+        } catch (e: JSONException) {
+            val gptError = responseBodyError(JSONObject(responseBody))
+            "失败 错误信息：${gptError.getString("message")}"
         }//解析json
     } catch (e: SocketTimeoutException) {
         "请求超时，请检查网络状态 或重新提问、换个问题。"

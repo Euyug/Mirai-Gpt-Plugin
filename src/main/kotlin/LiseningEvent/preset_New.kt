@@ -12,16 +12,16 @@ import java.io.File
 fun presetNew (key : String){
     bot.eventChannel.subscribeMessages {
         "$key" listen@{
-            subject.sendMessage("请发送json文本 格式如下:")
-            subject.sendMessage(File(folder_preset,"格式").readText()).recallIn(15_000)
+            subject.sendMessage("请发送json文本 格式如下:").recallIn(300_000)
+            subject.sendMessage(File(folder_preset,"格式").readText()).recallIn(300_000)
             val preset_json : JSONArray = selectMessages {
                 has<PlainText>{
                     try {
                         JSONArray(it.content.replace("\n",""))
                     }catch (e: JSONException){
-                        subject.sendMessage(e.message.toString())
-                        subject.sendMessage("你的内容是" + it.content)
-                        subject.sendMessage("请按格式，建议复制模板然后修改里面的内容")
+                        subject.sendMessage(e.message.toString()).recallIn(300_000)
+                        subject.sendMessage("你的内容是" + it.content).recallIn(300_000)
+                        subject.sendMessage("请按格式，建议复制模板然后修改里面的内容").recallIn(300_000)
                         JSONArray()
                     }
                 }
@@ -29,12 +29,12 @@ fun presetNew (key : String){
                 timeout(300_000) { subject.sendMessage("请在 300 秒内发送json文本"); JSONArray() }
             }
             if (preset_json.isEmpty)return@listen
-            subject.sendMessage("已经获取到json文本 请输入名字")
+            subject.sendMessage("已经获取到json文本 请输入名字").recallIn(300_000)
 
             val preset_name : String = selectMessages {
                 has<PlainText>{ it.toString() }
                 defaultReply { "请输入名字" }
-                timeout(30_000) { subject.sendMessage("请在 30 秒内发送json文本"); "" }
+                timeout(60_000) { subject.sendMessage("请在 60 秒内发送json文本").recallIn(300_000); "" }
             }
             if (preset_name.isEmpty())return@listen
 
@@ -42,7 +42,7 @@ fun presetNew (key : String){
             if (preset_file.exists()){
                 val preset_bac = File(folder_preset,"$preset_name.json.bac")
                 preset_file.renameTo(preset_bac)
-                subject.sendMessage("已存预设“$preset_name”,已将原预设文件添加后缀.bac")
+                subject.sendMessage("已存预设“$preset_name”,已将原预设文件添加后缀.bac").recallIn(300_000)
             }
             preset_file.writeText(preset_json.toString())
             subject.sendMessage("已经成功添加预设：$preset_name")

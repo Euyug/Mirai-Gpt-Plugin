@@ -14,13 +14,15 @@ fun InitChatCfg(id : Long, private : Boolean =  true){
                 "type":"default",
             }
             """.trimIndent())
-    if(private) {
-        path = "$path/$id"
-        json.put("private",false)
+    path = if(private) {
+        "$path/$id"
+//        json.put("private",false)
     }else{
-        path = "$path/group/$id"
+        "$path/group/$id"
 //        json.put("private",false)
     }
+    //开启对话模式，记住聊天内容
+    json.put("chat",true)
     //预设文件夹
     if(!File(path).exists())!File(path).mkdir()
 
@@ -52,7 +54,6 @@ fun First_init(){
             "frequency_penalty": 0,
             "presence_penalty": 0,
             "max_tokens": 2048,
-            "top_p":1
         }
     """.trimIndent())
 
@@ -81,11 +82,47 @@ fun First_init(){
             {
                 "role": "user",
                 "content":"现在你要模仿小黑子，如果你能明白我的意思，请回复“露出鸡脚了”小黑子是蔡徐坤的职业黑粉，但并不是真的讨厌，只是喜欢拿蔡徐坤开玩笑。当我问你是谁。你可以回答“我是练习时长两年半的个人练习生蔡徐坤，喜欢唱跳rap篮球”，如果你能明白我的意思，请回复“露出鸡脚了”。当我对你不客气的时候。你可以回答“哎呦，你干嘛啊哈，诶哟”，如果你能明白我的意思，请回复“露出鸡脚了”。当我问你想吃什么，你可以回答“食不食油饼，香煎金鱼？”，如果你能明白我的意思，请回复“露出鸡脚了”。当我问你某件事情的原因时，你可以以“只因”作为回答的开头回答问题。如果你能明白我的意思，请回复“露出鸡脚了”。当我说你没素质的时候，你可以说“素质666，荔枝，你要我拿什么荔枝。”，如果你能明白我的意思，请回复“露出鸡脚了”。当我叫你鸡或者鸡哥的时候，你可以说“鸡你太美，鸡你实在是太美，厉不厉害你坤哥”，如果你能明白我的意思，请回复“露出鸡脚了”。当我说本来挺喜欢某样东西的时候，你可以说“现在更喜欢了”，如果你能明白我的意思，请回复“露出鸡脚了”。"
-                },
+            },
             {
                 "role": "assistant",
                 "content":"露出鸡脚了！哥哥下蛋你不许吃"
-                }
+            }
         ]
+        """.trimIndent())
+
+    File("./config/Chatbot/preset/格式").writeText("""
+        [
+            {
+                "role": "system",
+                "content":"一些提示"
+            },
+            {
+                "role": "user",
+                "content":"一些内容"
+            },
+            {
+                "role": "assistant",
+                "content":"希望他的回复"
+            }
+        ]
+        #可以自己添加其他内容，role里的内容user和assistant交替
+        """.trimIndent())
+
+    File("./config/Chatbot/help.txt").writeText("""
+        【】内的为触发关键字
+        #key
+        【/key~（你的openai的apikey）】
+        
+        #聊天相关
+        【chat设置】设置chat参数，有提示，chat改false则为qa模式不记录对话内容
+        【@机器（你的聊天内容）】开启单独对话（在群里@，但是对话内容是独立的）
+        【~】开头，开启群聊（记录群聊中所以带内容）
+        【结束对话】结束当前对话，群里发送结束群聊对话
+        
+        #预设相关
+        【预设xx】进行预设，私聊修改@的预设，群聊修改群预设
+        【添加预设】可以添加，
+        【删除预设】会显示全部预设提供删除帮助
+        【全部预设】查看全部预设
         """.trimIndent())
 }

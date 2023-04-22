@@ -1,7 +1,9 @@
 package org.gptbot
 
+import net.mamoe.mirai.event.subscribeMessages
 import org.gptbot.ChatBot.BotBasic.bot
 import org.gptbot.LiseningEvent.*
+import java.io.File
 
 
 fun Botlistenner(){
@@ -15,9 +17,18 @@ fun Botlistenner(){
 
     presetDelete("删除预设")
 
-    chatGroup("#")
+    chatGroup("~")
 
     parameterSet("参数设置")
+
+    chatCfgSet("chat设置")
+
+//help
+    bot.eventChannel.subscribeMessages {
+        "gpt" reply  {
+            File("./config/Chatbot","help.txt").readText()
+        }
+    }
 }
 
 //fun GetChatMsg(content : String, ID : Long, role : String= "user") : String {

@@ -14,14 +14,17 @@ fun presetSet(key : String){
     ChatBot.BotBasic.bot.eventChannel.subscribeMessages {
 
         startsWith(key)reply {
-            val getmsg = message.content.substring(key.length)
+            val getmsg = message.content.substring(key.length).replace(" ","")
             var id : Long = message.source.fromId
             var private = true
             var path = path_preset
-            if(message.source.kind == MessageSourceKind.GROUP){
+            val c = if(message.source.kind == MessageSourceKind.GROUP){
                 id = message.source.targetId
                 private = false
                 path = "$path/group"
+                "群"
+            }else{
+                "QQ"
             }
 
             InitChatCfg(id,private)
@@ -40,6 +43,7 @@ fun presetSet(key : String){
                     if (fileMessage.exists()) fileMessage.delete()
 
                     val msgArray = JSONArray(file_preset.readText().trimIndent())
+                    subject.sendMessage("${c}${id}预设\"${getmsg}\"成功")
                     msgArray.getJSONObject(msgArray.length()-1).getString("content")
                 }catch (e: Exception){
                     "设置失败，检查预设格式"

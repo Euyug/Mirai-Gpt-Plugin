@@ -33,7 +33,7 @@ fun chatPrivate (key : String) {
         }
 
         "结束对话" reply {
-            val path: String = if (message.source.kind == MessageSourceKind.GROUP) "$path_preset/group" else path_preset
+            val path: String = if (message.source.kind != MessageSourceKind.GROUP) path_preset else "$path_preset/group"
             val id = if (message.source.kind == MessageSourceKind.GROUP) message.source.targetId else message.source.fromId
             if (File("$path/$id/message.json").exists()){
                 File("$path/$id/message.json").delete()

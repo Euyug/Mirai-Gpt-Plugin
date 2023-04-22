@@ -6,7 +6,6 @@ import org.gptbot.ChatBot.BotBasic.bot
 fun parameterSet(key : String){
     bot.eventChannel.subscribeMessages {
         "$key" listen@{
-
         }
     }
 }

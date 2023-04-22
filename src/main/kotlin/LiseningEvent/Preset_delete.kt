@@ -8,7 +8,7 @@ import java.io.File
 
 fun presetDelete(key : String) {
     ChatBot.BotBasic.bot.eventChannel.subscribeMessages {
-        "key" listen@{
+        "$key" listen@{
             subject.sendMessage("输入你想要的删除的预设名字")
             subject.sendMessage("已经存在预设：${allpreset()}")
             val preset_delet = selectMessages {
