@@ -1,8 +1,16 @@
 # Mirai-Gpt-Plugin
 
+mcl下载链接https://github.com/iTXTech/mcl-installer/releases
+
+具体看大佬的项目：https://github.com/iTXTech/mirai-console-loader
+
 机器人暂时只支持一个，默认为控制台登录的第一个机器人
 
-/key~（你的key）进行配置apikey 可以在./config/Chatbot/preset/key.txt中查看你添加的key
+
+# 使用方法
+一下【】内为触发关键字
+
+【/key~（你的key）】进行配置apikey 可以在./config/Chatbot/preset/key.txt中查看你添加的key
 
 【预设】（预设文件名字）可以设置预设，文件在./config/Chatbot/preset内，可以自己添加预设，名字为xx.json，格式要求和已有的预设相同，特别注意“”符号与换行
 
@@ -14,5 +22,8 @@
 每个对话独立，预设独立 ，在机器人眼中，不同的qq有不同的预设与聊天记录
 【@机器人】开始你的单独对话，【#】（你的聊天内容）
 
-通过【#】开启的聊天，会记录为群组聊天，【@机器人】开启的聊天会记为单独聊天
+通过【~】开启的聊天，会记录为群组聊天，【@机器人】开启的聊天会记为单独聊天
 同时【结束对话】在群聊中输入则结束整个群聊，私聊【结束】则结束个人对话
+
+# HELP
+【gpt】输入gpt可以查看帮助
