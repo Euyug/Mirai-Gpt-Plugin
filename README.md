@@ -8,7 +8,7 @@ mcl下载链接https://github.com/iTXTech/mcl-installer/releases
 
 
 # 使用方法
-一下【】内为触发关键字
+以下【】内为触发关键字
 
 【/key~（你的key）】进行配置apikey 可以在./config/Chatbot/preset/key.txt中查看你添加的key
 
