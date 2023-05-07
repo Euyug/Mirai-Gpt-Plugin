@@ -14,7 +14,7 @@ fun presetSet(key : String){
     ChatBot.BotBasic.bot.eventChannel.subscribeMessages {
 
         startsWith(key)reply {
-            val getmsg = message.content.substring(key.length).replace(" ","")
+            val getmsg = message.content.substring(key.length).replace("\n","").replace(" ","")
             var id : Long = message.source.fromId
             var private = true
             var path = path_preset
@@ -22,7 +22,7 @@ fun presetSet(key : String){
                 id = message.source.targetId
                 private = false
                 path = "$path/group"
-                "群"
+                "群聊"
             }else{
                 "QQ"
             }
