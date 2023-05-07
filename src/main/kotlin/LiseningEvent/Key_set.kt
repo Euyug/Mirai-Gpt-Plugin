@@ -12,7 +12,7 @@ import java.io.File
 fun keySet(key : String){
     bot.eventChannel.subscribeMessages {
         startsWith(key) reply {
-            val getmsg = message.content.substring(key.length)
+            val getmsg = message.content.substring(key.length).replace(" ","").replace("\n","")
             if (!getmsg.matches(tokenPattern)) {
                 "格式错误重新配置"
             }else {
