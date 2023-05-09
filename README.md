@@ -4,6 +4,8 @@ mcl下载链接https://github.com/iTXTech/mcl-installer/releases
 
 具体看大佬的项目：https://github.com/iTXTech/mirai-console-loader
 
+运行mcl后将插件放到plugin文件夹下即可
+
 机器人暂时只支持一个，默认为控制台登录的第一个机器人
 
 
