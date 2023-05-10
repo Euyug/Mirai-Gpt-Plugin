@@ -31,4 +31,5 @@ mcl下载链接https://github.com/iTXTech/mcl-installer/releases
 【gpt】输入gpt可以查看帮助
 
 # 其他
-如果想使用gpt-4模型，给机器人重新配置gpt-4的key，并修改./config/Chatbot文件夹下的parameters.json文件，具体格式可以参考官方文档https://platform.openai.com/docs/api-reference
+如果想使用gpt-4模型，给机器人重新配置gpt-4的key，并修改./config/Chatbot文件夹下的parameters.json文件，理论上可以直接把model的值"gpt-3.5-turbo"改成"gpt-4"
+具体格式可以参考官方文档https://platform.openai.com/docs/api-reference
