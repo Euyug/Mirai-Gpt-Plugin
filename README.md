@@ -1,6 +1,6 @@
 # Mirai-Gpt-Plugin
 
-mcl下载链接https://github.com/iTXTech/mcl-installer/releases
+mcl下载链接：https://github.com/iTXTech/mcl-installer/releases
 
 具体看大佬的项目：https://github.com/iTXTech/mirai-console-loader
 
