@@ -21,13 +21,7 @@ mcl下载链接：https://github.com/iTXTech/mcl-installer/releases
 
 【删除预设】可删除，并列出已存在的预设
 
-默认为default ，默认开启chat模式（能记住聊天记录），需要手动输入“结束对话”停止（记住这一点，不然key的消耗会很大）
-
-每个对话独立，预设独立 ，在机器人眼中，不同的qq有不同的预设与聊天记录
-
 【@机器人】（内容）开始你的单独对话，【~】（内容），开始群内对话
-
-通过【~】开启的聊天，会记录为群组聊天，【@机器人】开启的聊天会记为单独聊天
 
 【结束对话】在群聊中输入则结束整个群聊对话，私聊【结束】则结束个人对话
 
@@ -37,4 +31,10 @@ mcl下载链接：https://github.com/iTXTech/mcl-installer/releases
 # 其他
 如果想使用gpt-4模型，给机器人重新配置gpt-4的key，并修改./config/Chatbot文件夹下的parameters.json文件，理论上可以直接把model的值"gpt-3.5-turbo"改成"gpt-4"
 具体格式可以参考官方文档https://platform.openai.com/docs/api-reference
+
+默认为default ，默认开启chat模式（能记住聊天记录），需要手动输入“结束对话”停止（记住这一点，不然key的消耗会很大）
+
+每个对话独立，预设独立 ，在机器人眼中，不同的qq有不同的预设与聊天记录
+
+通过【~】开启的聊天，会记录为群组聊天，【@机器人】开启的聊天会记为单独聊天
 
