@@ -1,4 +1,5 @@
 # Mirai-Gpt-Plugin
+一个基于mirai框架的chatgpt插件
 
 mcl下载链接：https://github.com/iTXTech/mcl-installer/releases
 
