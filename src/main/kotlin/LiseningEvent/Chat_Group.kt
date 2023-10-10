@@ -10,7 +10,7 @@ import org.gptbot.InitChatCfg
 
 fun chatGroup(key : String){
     bot.eventChannel.subscribeAlways<GroupMessageEvent> {
-        message.content.replace("＃","#")
+        message.content.replace("～","~")
         if (message.content.startsWith(key)){
             val getmsg = message.content.substring(key.length)
             val id = message.source.targetId
