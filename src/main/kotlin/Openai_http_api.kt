@@ -54,6 +54,12 @@ fun openaiChatApi(content: String, ID: Long, name: String = ""): String {
     if (name.isNotEmpty()) newMessage.put("name",name.substring(0, 6))
     message = message.put(newMessage)
 
+    //保存聊天记录,并根据长度修改防止过长
+    if (chat) {
+        while (message.toString().length > (2000 - requestMessage.toString().length)) message = JSONArray(message.drop(1))
+        messageFile.writeText(message.toString())
+    }
+    
     //请求体里的message添加聊天内容
     for (i in 0 until message.length()) requestMessage.put(message.getJSONObject(i))
 
@@ -95,7 +101,7 @@ fun openaiChatApi(content: String, ID: Long, name: String = ""): String {
             //保存聊天记录,并根据长度修改防止过长
             if (chat) {
                 message = message.put(s)
-                while (message.toString().length > 2000) message = JSONArray(message.drop(2))
+                while (message.toString().length > 2000) message = JSONArray(message.drop(1))
                 messageFile.writeText(message.toString())
             }
 

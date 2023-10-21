@@ -18,6 +18,7 @@ fun Botlistenner(){
     presetDelete("删除预设")
 
     chatGroup("~")
+    chatGroup("～")
 
     parameterSet("参数设置")
 
