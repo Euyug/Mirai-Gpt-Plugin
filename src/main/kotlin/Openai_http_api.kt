@@ -56,7 +56,7 @@ fun openaiChatApi(content: String, ID: Long, name: String = ""): String {
 
     //保存聊天记录,并根据长度修改防止过长
     if (chat) {
-        while (message.toString().length > 2000) message = JSONArray(message.drop(1))
+        while (message.toString().length > (2000 - requestMessage.toString().length)) message = JSONArray(message.drop(1))
         messageFile.writeText(message.toString())
     }
     
