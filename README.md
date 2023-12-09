@@ -1,5 +1,5 @@
 # Mirai-Gpt-Plugin
-一个基于mirai框架的chatgpt插件
+一个基于mirai框架的chatgpt qq机器人插件
 
 mcl下载链接：https://github.com/iTXTech/mcl-installer/releases
 
@@ -25,6 +25,8 @@ mcl下载链接：https://github.com/iTXTech/mcl-installer/releases
 【@机器人】（内容）开始你的单独对话，【~】（内容），开始群内对话
 
 【结束对话】在群聊中输入则结束整个群聊对话，私聊【结束】则结束个人对话
+
+注意！ 反向代理可以设置，替代的是“api.openai.com”，也就是用你的服务器反向代理api.openai.com这个域名
 
 # HELP
 【gpt】输入gpt可以查看帮助
